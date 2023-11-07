@@ -38,5 +38,8 @@ class Credential(models.Model):
     )
     username = models.TextField(null=True)
     secret = EncryptedTextField(null=True)
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True, null=False)
     modified_at = models.DateTimeField(auto_now=True, null=False)

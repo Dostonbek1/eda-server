@@ -14,31 +14,36 @@
 
 from django.db import models
 
-__all__ = ("DecisionEnvironment",)
+__all__ = ("Organization",)
 
 
-class DecisionEnvironment(models.Model):
+class Organization(models.Model):
     class Meta:
-        db_table = "core_decision_environment"
+        db_table = "core_organization"
         constraints = [
             models.CheckConstraint(
                 check=~models.Q(name=""),
-                name="ck_empty_decision_env_name",
+                name="ck_empty_organization_name",
             )
         ]
 
     name = models.TextField(null=False, unique=True)
     description = models.TextField(default="", blank=True, null=False)
-    image_url = models.TextField(blank=False, null=False)
-    credential = models.ForeignKey(
-        "Credential",
-        blank=True,
-        null=True,
-        default=None,
-        on_delete=models.SET_NULL,
-    )
-    organization = models.ForeignKey(
-        "Organization", on_delete=models.CASCADE, null=True
-    )
+    created_at = models.DateTimeField(auto_now_add=True, null=False)
+    modified_at = models.DateTimeField(auto_now=True, null=False)
+
+
+class Team(models.Model):
+    class Meta:
+        db_table = "core_team"
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(name=""),
+                name="ck_empty_team_name",
+            )
+        ]
+
+    name = models.TextField(null=False, unique=True)
+    description = models.TextField(default="", blank=True, null=False)
     created_at = models.DateTimeField(auto_now_add=True, null=False)
     modified_at = models.DateTimeField(auto_now=True, null=False)

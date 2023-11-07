@@ -56,6 +56,9 @@ class Activation(models.Model):
     extra_var = models.ForeignKey(
         "ExtraVar", on_delete=models.CASCADE, null=True
     )
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
     restart_policy = models.TextField(
         choices=RestartPolicy.choices(),
         default=RestartPolicy.ON_FAILURE,
@@ -147,6 +150,9 @@ class ActivationInstance(models.Model):
     )
     git_hash = models.TextField(null=False, default="")
     activation = models.ForeignKey("Activation", on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
     started_at = models.DateTimeField(auto_now_add=True, null=False)
     updated_at = models.DateTimeField(null=True)
     ended_at = models.DateTimeField(null=True)
@@ -205,6 +211,9 @@ class ActivationInstanceLog(models.Model):
 
     activation_instance = models.ForeignKey(
         "ActivationInstance", on_delete=models.CASCADE
+    )
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
     )
     line_number = models.IntegerField()
     log = models.TextField()

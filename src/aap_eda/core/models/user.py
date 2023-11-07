@@ -30,6 +30,13 @@ class User(AbstractUser):
     """  # noqa: E501
 
     roles = models.ManyToManyField("Role", related_name="users")
+    organization = models.ManyToManyField(
+        "Organization",
+        related_name="users",
+        blank=True,
+        null=True,
+        default=None,
+    )
     modified_at = models.DateTimeField(auto_now=True, null=False)
 
 
@@ -38,6 +45,13 @@ class AwxToken(models.Model):
     name = models.TextField(null=False, blank=False)
     description = models.TextField(null=False, blank=True, default="")
     token = EncryptedTextField(null=False, blank=False)
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.SET_NULL,
+    )
     created_at = models.DateTimeField(auto_now_add=True, null=False)
     modified_at = models.DateTimeField(auto_now=True, null=False)
 

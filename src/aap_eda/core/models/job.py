@@ -29,6 +29,9 @@ class Job(models.Model):
         indexes = [models.Index(fields=["uuid"], name="ix_job_uuid")]
 
     uuid = models.UUIDField()
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
 
 
 class JobInstance(models.Model):
@@ -45,6 +48,9 @@ class JobInstance(models.Model):
     ruleset = models.TextField()
     rule = models.TextField()
     hosts = models.TextField()
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
 
 
 class ActivationInstanceJobInstance(models.Model):
@@ -56,6 +62,9 @@ class ActivationInstanceJobInstance(models.Model):
         "ActivationInstance", on_delete=models.CASCADE
     )
     job_instance = models.ForeignKey("JobInstance", on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
 
 
 class JobInstanceEvent(models.Model):
@@ -71,6 +80,9 @@ class JobInstanceEvent(models.Model):
     counter = models.IntegerField()
     stdout = models.TextField()
     type = models.TextField()
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True, null=False)
 
 
@@ -86,3 +98,6 @@ class JobInstanceHost(models.Model):
     play = models.TextField()
     task = models.TextField()
     status = models.TextField()
+    organization = models.ForeignKey(
+        "Organization", on_delete=models.CASCADE, null=True
+    )

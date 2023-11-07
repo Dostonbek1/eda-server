@@ -37,6 +37,13 @@ class Rulebook(models.Model):
     description = models.TextField(null=True, default="")
     rulesets = models.TextField(null=False, default="")
     project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
     created_at = models.DateTimeField(auto_now_add=True, null=False)
     modified_at = models.DateTimeField(auto_now=True, null=False)
 
@@ -51,6 +58,13 @@ class Ruleset(models.Model):
     rulebook = models.ForeignKey(
         "Rulebook", on_delete=models.CASCADE, null=True
     )
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
     created_at = models.DateTimeField(auto_now_add=True, null=False)
     modified_at = models.DateTimeField(auto_now=True, null=False)
 
@@ -63,6 +77,13 @@ class Rule(models.Model):
     ruleset = models.ForeignKey("Ruleset", on_delete=models.CASCADE, null=True)
     name = models.TextField(null=False)
     action = models.JSONField(default=dict, null=False)
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
 
 
 class AuditRule(models.Model):
@@ -87,6 +108,13 @@ class AuditRule(models.Model):
     job_instance = models.ForeignKey(
         "JobInstance", on_delete=models.SET_NULL, null=True
     )
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
 
 
 class AuditAction(models.Model):
@@ -105,6 +133,13 @@ class AuditAction(models.Model):
     audit_rule = models.ForeignKey(
         "AuditRule", on_delete=models.CASCADE, null=True
     )
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
 
 
 class AuditEvent(models.Model):
@@ -121,4 +156,11 @@ class AuditEvent(models.Model):
 
     audit_actions = models.ManyToManyField(
         "AuditAction", related_name="audit_events"
+    )
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
     )

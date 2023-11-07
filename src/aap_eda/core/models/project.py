@@ -61,6 +61,13 @@ class Project(models.Model):
         default=None,
         on_delete=models.SET_NULL,
     )
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
     archive_file = models.FileField(upload_to=PROJECT_ARCHIVE_DIR)
 
     import_state = models.TextField(
@@ -83,6 +90,13 @@ class ExtraVar(models.Model):
     name = models.TextField(unique=True, null=True, default=None)
     extra_var = models.TextField()
     project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
+    organization = models.ForeignKey(
+        "Organization",
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE,
+    )
 
 
 __all__ = [
