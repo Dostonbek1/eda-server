@@ -346,6 +346,10 @@ LOGGING = {
             "level": APP_LOG_LEVEL,
             "propagate": False,
         },
+        "ansible_base": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
     },
 }
 
@@ -401,7 +405,9 @@ ANSIBLE_RULEBOOK_FLUSH_AFTER = settings.get("ANSIBLE_RULEBOOK_FLUSH_AFTER", 1)
 # ---------------------------------------------------------
 # DJANGO ANSIBLE BASE
 # ---------------------------------------------------------
-ANSIBLE_BASE_AUTHENTICATOR_CLASS_PREFIX = "ansible_base.authenticator_plugins"
+ANSIBLE_BASE_AUTHENTICATOR_CLASS_PREFIXES = [
+    "aap_eda.core.authenticator_plugins"
+]
 AUTHENTICATION_BACKENDS = [
     "ansible_base.authentication.backend.AnsibleBaseAuth",
     "django.contrib.auth.backends.ModelBackend",
