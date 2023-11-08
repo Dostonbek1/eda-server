@@ -128,6 +128,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "django_rq",
     "django_filters",
+    "ansible_base",
     # Local apps
     "aap_eda.api",
     "aap_eda.core",
@@ -139,6 +140,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "ansible_base.utils.middleware.AuthenticatorBackendMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -230,7 +232,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "aap_eda.api.pagination.DefaultPagination",
     "PAGE_SIZE": 20,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "aap_eda.api.authentication.SessionAuthentication",
+        "ansible_base.authentication.session.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
@@ -344,6 +346,10 @@ LOGGING = {
             "level": APP_LOG_LEVEL,
             "propagate": False,
         },
+        "ansible_base": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
     },
 }
 
@@ -395,3 +401,14 @@ ACTIVATION_MAX_RESTARTS_ON_FAILURE = int(
 # ---------------------------------------------------------
 ANSIBLE_RULEBOOK_LOG_LEVEL = settings.get("ANSIBLE_RULEBOOK_LOG_LEVEL", "-v")
 ANSIBLE_RULEBOOK_FLUSH_AFTER = settings.get("ANSIBLE_RULEBOOK_FLUSH_AFTER", 1)
+
+# ---------------------------------------------------------
+# DJANGO ANSIBLE BASE
+# ---------------------------------------------------------
+ANSIBLE_BASE_AUTHENTICATOR_CLASS_PREFIXES = [
+    "aap_eda.core.authenticator_plugins"
+]
+AUTHENTICATION_BACKENDS = [
+    "ansible_base.authentication.backend.AnsibleBaseAuth",
+    "django.contrib.auth.backends.ModelBackend",
+]
