@@ -405,6 +405,9 @@ ANSIBLE_RULEBOOK_FLUSH_AFTER = settings.get("ANSIBLE_RULEBOOK_FLUSH_AFTER", 1)
 # ---------------------------------------------------------
 # DJANGO ANSIBLE BASE
 # ---------------------------------------------------------
+ANSIBLE_BASE_AUTHENTICATOR_RECONCILE_MODULE = (
+    "aap_eda.core.management.reconcile_user"
+)
 ANSIBLE_BASE_AUTHENTICATOR_CLASS_PREFIXES = [
     "aap_eda.core.authenticator_plugins"
 ]
