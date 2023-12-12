@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi:latest
+FROM quay.io/centos/centos:stream9
 
 ARG USER_ID=${USER_ID:-1001}
 RUN useradd --uid "$USER_ID" --gid 0 --home-dir /app --create-home eda \
@@ -15,8 +15,12 @@ RUN DNF=dnf \
     gettext \
     git-core \
     java-17-openjdk-headless \
-    # Experimental LDAP Integration https://issues.redhat.com/browse/AAP-16938
-    openldap-devel" \
+    # Experimental LDAP Integration https://issues.redhat.com/browse/AAP-16938 |<==
+    openldap-devel \
+    libtool-ltdl-devel \
+    xmlsec1-devel" \
+    # ==>|
+    && sed -i '/^\[crb\]$/,/^enabled=0$/ s/enabled=0/enabled=1/' /etc/yum.repos.d/centos.repo \
     && $DNF -y install $INSTALL_PACKAGES \
     && $DNF -y clean all \
     && rm -rf /var/cache/dnf
