@@ -591,9 +591,9 @@ djangorestframework = "*"
 inflection = "*"
 
 [package.extras]
-all = ["channels", "cryptography", "django-auth-ldap", "drf-spectacular", "pyjwt", "pytest", "pytest-django", "python-ldap", "python3-saml", "requests", "social-auth-app-django", "tabulate", "tacacs_plus"]
+all = ["channels", "cryptography", "django-auth-ldap", "drf-spectacular", "pyjwt", "pytest", "pytest-django", "python-ldap", "python3-saml", "requests", "social-auth-app-django", "tabulate"]
 api-documentation = ["drf-spectacular"]
-authentication = ["django-auth-ldap", "python-ldap", "python3-saml", "social-auth-app-django", "tabulate", "tacacs_plus"]
+authentication = ["django-auth-ldap", "python-ldap", "python3-saml", "social-auth-app-django", "tabulate"]
 channel-auth = ["channels"]
 jwt-consumer = ["pyjwt", "requests"]
 testing = ["cryptography", "pytest", "pytest-django"]
